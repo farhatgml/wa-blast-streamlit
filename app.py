@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 from urllib.parse import quote
 
 st.set_page_config(page_title="WA Blast Generator", layout="centered")
@@ -42,7 +43,27 @@ if input_mode == "📁 Upload Excel":
 elif input_mode == "✍️ Input Manual":
     st.info("Silakan isi data di bawah ini.")
     name_input = st.text_input("Nama")
-    phone_input = st.text_input("Nomor WhatsApp (contoh: 6281234567890)")
+    raw_phone = st.text_input("Nomor WhatsApp (contoh: 6281234567890)")
+    def clean_phone_number(raw):
+        if not raw:
+            return ""
+        # Remove all non-digit characters
+        digits = re.sub(r"\D", "", raw)
+    
+        # Handle prefix: +62 → 62, or 08 → 628
+        if digits.startswith("62"):
+            return digits
+        elif digits.startswith("0"):
+            return "62" + digits[1:]
+        elif digits.startswith("8"):  # sometimes users paste "887xxxx"
+            return "62" + digits
+        else:
+            return digits  # fallback
+phone_input = clean_phone_number(raw_phone)
+
+if phone_input:
+    st.caption(f"Nomor diformat: **{phone_input}**")
+    
     produk_input = st.text_input("Nama Produk")
     limit_number = st.number_input("Limit Kredit (angka saja)", min_value=0, step=1000000)
     limit_input = f"Rp{limit_number:,.0f}".replace(",", ".")
