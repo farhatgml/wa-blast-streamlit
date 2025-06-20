@@ -13,9 +13,10 @@ greeting = st.selectbox("Pilih Waktu (Template Waktu):", ["Selamat pagi", "Selam
 # Message template input
 st.subheader("✍️ Customize Message Template")
 default_template = (
-    "{{waktu}}, {{name}}. Selamat! Sekarang kamu sudah menjadi nasabah terpilih dari produk unggulan Bank Mandiri, yaitu {{produk}}. "
-    "Berdasarkan data historis Saudara dan track record pinjaman yang sudah dilunaskan, Saudara berhak mendapatkan pinjaman dengan limit sebesar {{limit}}. "
-    "Balas pesan ini apabila Anda tertarik untuk melakukan pengajuan! Tahapnya mudah, cepat, dan pastinya terpercaya bersama Bank Mandiri!"
+    "{{waktu}}, {{name}}.\n\n"
+    "Selamat! Sekarang kamu sudah menjadi nasabah terpilih dari produk unggulan Bank Mandiri, yaitu {{produk}}. "
+    "Berdasarkan data historis Saudara dan track record pinjaman yang sudah dilunaskan, Saudara berhak mendapatkan pinjaman dengan limit sebesar {{limit}}.\n\n"
+    "Mohon balas pesan ini apabila Anda tertarik untuk melakukan pengajuan! Tahapnya mudah, cepat, dan pastinya terpercaya bersama Bank Mandiri!"
 )
 template = st.text_area("Edit your message template here:", value=default_template, height=200)
 
