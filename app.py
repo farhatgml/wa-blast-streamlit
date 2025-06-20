@@ -57,7 +57,7 @@ if input_mode == "📁 Upload Excel":
 elif input_mode == "✍️ Input Manual":
     st.info("Silakan isi data di bawah ini.")
     name_input = st.text_input("Nama")
-    raw_phone = st.text_input("Nomor WhatsApp (boleh copy dari kontak)")
+    raw_phone = st.text_input("Nomor WhatsApp (contoh: 6281234567890)")
 
     phone_input = clean_phone_number(raw_phone)
     if phone_input:
