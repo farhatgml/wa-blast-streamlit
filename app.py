@@ -46,6 +46,7 @@ elif input_mode == "✍️ Input Manual":
     produk_input = st.text_input("Nama Produk")
     limit_number = st.number_input("Limit Kredit (angka saja)", min_value=0, step=1000000)
     limit_input = f"Rp{limit_number:,.0f}".replace(",", ".")
+    st.caption(f"Format yang akan digunakan: **{limit_input}**")
 
     if name_input and phone_input and produk_input and limit_input:
         df = pd.DataFrame([{
