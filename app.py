@@ -44,7 +44,8 @@ elif input_mode == "✍️ Input Manual":
     name_input = st.text_input("Nama")
     phone_input = st.text_input("Nomor WhatsApp (contoh: 6281234567890)")
     produk_input = st.text_input("Nama Produk")
-    limit_input = st.text_input("Limit Kredit (contoh: Rp50.000.000)")
+    limit_number = st.number_input("Limit Kredit (angka saja)", min_value=0, step=1000000)
+    limit_input = f"Rp{limit_number:,.0f}".replace(",", ".")
 
     if name_input and phone_input and produk_input and limit_input:
         df = pd.DataFrame([{
