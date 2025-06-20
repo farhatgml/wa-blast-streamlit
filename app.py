@@ -10,6 +10,15 @@ st.write("Upload your Excel file and select a greeting to auto-generate WA messa
 # Select greeting
 greeting = st.selectbox("Pilih Waktu (Template Waktu):", ["Selamat pagi", "Selamat siang", "Selamat sore"])
 
+# Message template input
+st.subheader("✍️ Customize Message Template")
+default_template = (
+    "{{waktu}}, {{name}}. Selamat! Sekarang kamu sudah menjadi nasabah terpilih dari produk unggulan Bank Mandiri, yaitu {{produk}}. "
+    "Berdasarkan data historis Saudara dan track record pinjaman yang sudah dilunaskan, Saudara berhak mendapatkan pinjaman dengan limit sebesar {{limit}}. "
+    "Balas pesan ini apabila Anda tertarik untuk melakukan pengajuan! Tahapnya mudah, cepat, dan pastinya terpercaya bersama Bank Mandiri!"
+)
+template = st.text_area("Edit your message template here:", value=default_template, height=200)
+
 # File uploader
 uploaded_file = st.file_uploader("Upload Excel (.xlsx)", type="xlsx")
 
@@ -31,12 +40,11 @@ if uploaded_file:
             produk = row["Produk"]
             limit = row["Limit Kredit"]
 
-            message = (
-                f"{greeting}, {name}. Selamat! Sekarang kamu sudah menjadi nasabah terpilih dari produk unggulan Bank Mandiri, yaitu {produk}. "
-                f"Berdasarkan data historis Saudara dan track record pinjaman yang sudah dilunaskan, Saudara berhak mendapatkan pinjaman dengan limit sebesar {limit}. "
-                "Balas pesan ini apabila Anda tertarik untuk melakukan pengajuan! Tahapnya mudah, cepat, dan pastinya terpercaya bersama Bank Mandiri!"
-            )
+            # Replace placeholders in the user-defined template
+            message = template.replace("{{waktu}}", greeting)\
+                              .replace("{{name}}", name)\
+                              .replace("{{produk}}", produk)\
+                              .replace("{{limit}}", str(limit))
 
             wa_link = f"https://wa.me/{phone}?text={quote(message)}"
-
             st.markdown(f"**{name}**: [Kirim WA]({wa_link})")
